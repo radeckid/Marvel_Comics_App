@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.DetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center"
+                android:elevation="4dp"
+                android:gravity="center"
+                app:elevation="4dp"
+                app:navigationIcon="@drawable/awesome_long_arrow_alt_left"
+                app:title="@string/details" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <ImageView
+            android:id="@+id/detailImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/bottomSheetBehaviour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_bottom_sheet"
+        android:orientation="vertical"
+        android:padding="8dp"
+        app:behavior_hideable="false"
+        app:behavior_peekHeight="35dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        >
+
+        <FrameLayout
+            android:layout_width="62dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/hold_line" />
+
+        <TextView
+            android:id="@+id/comicsTitle"
+            style="@style/TextAppearance.AppCompat.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
+            tools:text="Avengers #39" />
+
+        <TextView
+            android:id="@+id/comicsAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            tools:text="written by Jason Aaron" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/comicsDescription"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_regular"
+                tools:text="@tools:sample/lorem[35]" />
+        </androidx.core.widget.NestedScrollView>
+
+        <Button
+            android:id="@+id/moreBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/find_out_more"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

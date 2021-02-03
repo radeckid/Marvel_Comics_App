@@ -1,0 +1,43 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MarvelComicsApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondaryColor</item>
+        <item name="colorSecondaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnSecondary">@color/colorOnPrimary</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!-- Customize your theme here. -->
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+    </style>
+
+    <!--    Toolbar-->
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="titleTextAppearance">@style/Widget.App.Toolbar.TitleTextAppearance</item>
+        <item name="iconTint">@color/toolbarIconTint</item>
+    </style>
+
+    <style name="Widget.App.Toolbar.TitleTextAppearance" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="fontFamily">@font/roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <!--    SearchView-->
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="layout">@layout/fragment_search</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="font">@font/roboto_regular</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColorHint">@color/searchViewText</item>
+        <item name="commitIcon">@drawable/awesome_search</item>
+    </style>
+
+
+</resources>

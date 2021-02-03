@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="primaryColor">#F41E1E</color>
+    <color name="primaryDarkColor">#D50000</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="secondaryColor">#f33335</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="searchViewBg">#f7f7f7</color>
+    <color name="searchViewText">#C1C3D1</color>
+
+    <color name="iconGrey">#e1e1e1</color>
+    <color name="titleColor">#000000</color>
+
+    <color name="onSecoundText">#FFFFFF</color>
+
+    <color name="greyLine">#c4c4c4</color>
+
+    <color name="networkError">#F41E1E</color>
+
+    <color name="colorOnPrimary">@color/white</color>
+    <color name="toolbarIconTint">@color/black</color>
+
+</resources>
