@@ -12,4 +12,13 @@
     <string name="there_is_not_comic_book">There is not comic book  \"</string>
     <string name="in_our_library">\" in our library. Check the spelling and try again.</string>
     <string name="check_internet_connection">Check internet connection</string>
+    <string name="welcomeMarvelApp">Welcome in Marvel App</string>
+    <string name="register">Create new account</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="passwordError">Password should have 8 characters, 1 Uppercase letter and 1 digit</string>
+    <string name="emailError">Check your email address</string>
+    <string name="authError">Authentication failed.</string>
+    <string name="restore_password">Restore password</string>
 </resources>
