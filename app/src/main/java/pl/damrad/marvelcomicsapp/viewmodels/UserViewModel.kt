@@ -78,7 +78,7 @@ class UserViewModel(
                     }
                 }
                 else -> {
-                    _toast.value = context.getString(R.string.authError)
+                    _toast.value = task.exception?.message ?: context.getString(R.string.authError)
                     _userCreateStatus.value = false
                 }
             }
