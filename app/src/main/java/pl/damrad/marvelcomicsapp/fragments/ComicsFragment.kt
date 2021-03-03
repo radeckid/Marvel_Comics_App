@@ -21,6 +21,7 @@ import pl.damrad.marvelcomicsapp.retrofit.NoConnectivityException
 import pl.damrad.marvelcomicsapp.retrofit.response.MarvelResponse
 import pl.damrad.marvelcomicsapp.viewmodels.MainViewModel
 import java.io.IOException
+import java.lang.NullPointerException
 
 class ComicsFragment : Fragment() {
 
@@ -47,6 +48,10 @@ class ComicsFragment : Fragment() {
 
         initRecyclerView()
         connectionObserve()
+
+        binding.crashFab.setOnClickListener {
+            throw NullPointerException("Look mom null pointer in kotlin!")
+        }
     }
 
     private fun connectionObserve() {
