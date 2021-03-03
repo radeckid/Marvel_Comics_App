@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bannerLogo">200dp</dimen>
+    <dimen name="banner_margin">16dp</dimen>
+    <dimen name="login_title_margin">16dp</dimen>
+    <dimen name="inputText_margin">16dp</dimen>
+    <dimen name="login_btn_margin">16dp</dimen>
+    <dimen name="create_new_acc_btn_margin">16dp</dimen>
+</resources>

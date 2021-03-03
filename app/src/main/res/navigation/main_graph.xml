@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_graph"
-    app:startDestination="@id/comicsFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/comicsFragment"
@@ -29,5 +29,16 @@
             android:id="@+id/action_searchFragment_to_detailsFragment"
             app:destination="@id/detailsFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="pl.damrad.marvelcomicsapp.fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_comicsFragment"
+            app:destination="@id/comicsFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
