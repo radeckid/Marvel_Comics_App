@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         val controller = Navigation.findNavController(this, R.id.fragment_nav_host)
         binding.bottomNavigationView.setupWithNavController(controller)
-auth.signOut()
+
         if (auth.currentUser != null) {
             controller.navigate(R.id.action_loginFragment_to_comicsFragment)
         }
