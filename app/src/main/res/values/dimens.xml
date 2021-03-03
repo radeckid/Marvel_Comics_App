@@ -6,4 +6,5 @@
     <dimen name="inputText_margin">16dp</dimen>
     <dimen name="login_btn_margin">16dp</dimen>
     <dimen name="create_new_acc_btn_margin">16dp</dimen>
+    <dimen name="crashfab_margin">16dp</dimen>
 </resources>
