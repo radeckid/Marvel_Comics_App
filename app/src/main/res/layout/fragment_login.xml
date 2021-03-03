@@ -16,7 +16,7 @@
         android:layout_marginEnd="16dp"
         android:adjustViewBounds="true"
         android:src="@drawable/ic_icon"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/welcomeTV"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -29,7 +29,7 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/welcomeTV"
         style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -86,12 +86,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/createNewAccountBtn"
         app:layout_constraintEnd_toEndOf="@+id/passwordTextField"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/createNewAccountBtn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

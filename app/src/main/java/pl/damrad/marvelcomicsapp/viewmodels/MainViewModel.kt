@@ -60,7 +60,6 @@ class MainViewModel(
     }
 
     fun setState(state: Boolean) {
-        _connectionState.postValue(null)
         _connectionState.postValue(state)
     }
 }
