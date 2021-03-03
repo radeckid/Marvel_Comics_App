@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.detailsFragment, R.id.loginFragment -> {
+                R.id.detailsFragment, R.id.loginFragment, R.id.registrationFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                 }
                 else -> {
