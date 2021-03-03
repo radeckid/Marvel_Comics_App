@@ -11,8 +11,12 @@ class UserRepository {
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-     fun signInWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
-         return auth.signInWithEmailAndPassword(email, password)
+    fun signInWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
+        return auth.signInWithEmailAndPassword(email, password)
+    }
+
+    fun createUserWithEmailAndPassword(email: String, password: String): Task<AuthResult> {
+        return auth.createUserWithEmailAndPassword(email, password)
     }
 
     fun isValidEmail(target: CharSequence?): Boolean {
@@ -22,5 +26,9 @@ class UserRepository {
     fun isValidPassword(target: CharSequence?): Boolean {
         val regex = Regex(ValidationPatterns.EMAIL_PATTERN)
         return !TextUtils.isEmpty(target) && regex.matches(target!!)
+    }
+
+    fun comparePasswords(target: CharSequence?, target2: CharSequence?): Boolean {
+        return !target.isNullOrEmpty() && !target2.isNullOrEmpty() && target == target2
     }
 }

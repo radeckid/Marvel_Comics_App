@@ -10,12 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
-import pl.damrad.marvelcomicsapp.databinding.FragmentLoginBinding
+import pl.damrad.marvelcomicsapp.databinding.FragmentRegistrationBinding
 import pl.damrad.marvelcomicsapp.viewmodels.UserViewModel
 
-class LoginFragment : Fragment() {
+class RegistrationFragment : Fragment() {
 
-    private var binding: FragmentLoginBinding? = null
+    private var binding: FragmentRegistrationBinding? = null
 
     private val userViewModel: UserViewModel by viewModel()
 
@@ -23,7 +23,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val bind = FragmentLoginBinding.inflate(inflater, container, false)
+        val bind = FragmentRegistrationBinding.inflate(inflater, container, false)
         binding = bind
         return bind.root
     }
@@ -63,22 +63,29 @@ class LoginFragment : Fragment() {
             userViewModel.checkPasswordValid(text)
         }
 
-        userViewModel.authStatus.observe(viewLifecycleOwner) { result ->
-            if (result) findNavController().navigate(R.id.action_loginFragment_to_comicsFragment)
+        userViewModel.isRepeatedPasswordValid.observe(viewLifecycleOwner) { result ->
+            if (!result) binding?.repeatPasswordET?.error = getString(R.string.passwordError)
         }
 
+        binding?.repeatPasswordET?.doOnTextChanged { text, _, _, _ ->
+            userViewModel.checkPasswordValid(text)
+        }
+
+        userViewModel.userCreateStatus.observe(viewLifecycleOwner) { result ->
+            if (result) findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+        }
     }
 
     private fun setOnClickListeners(view: View) {
-
-        binding?.loginBtn?.setOnClickListener {
-            val password = binding?.passwordET?.text.toString()
-            val email = binding?.emailET?.text.toString()
-            userViewModel.signIn(email, password, view.context.applicationContext)
+        binding?.alreadyHaveAccountBtn?.setOnClickListener {
+            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
         }
 
-        binding?.createNewAccountBtn?.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        binding?.registerBtn?.setOnClickListener {
+            val password = binding?.passwordET?.text.toString()
+            val password2 = binding?.repeatPasswordET?.text.toString()
+            val email = binding?.emailET?.text.toString()
+            userViewModel.signUp(email, password, password2, view.context)
         }
     }
 }

@@ -4,29 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.LoginFragment">
-
-    <ImageView
-        android:id="@+id/bannerIV"
-        android:layout_width="@dimen/bannerLogo"
-        android:layout_height="@dimen/bannerLogo"
-        android:layout_marginStart="@dimen/banner_margin"
-        android:layout_marginTop="@dimen/banner_margin"
-        android:layout_marginEnd="@dimen/banner_margin"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_icon"
-        app:layout_constraintBottom_toTopOf="@+id/welcomeTV"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/logo" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+    tools:context=".fragments.RegistrationFragment">
 
     <TextView
         android:id="@+id/welcomeTV"
@@ -35,11 +13,20 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/login_title_margin"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/welcomeMarvelApp"
+        android:text="@string/registration"
         android:textSize="32sp"
+        app:layout_constraintVertical_bias="0.9"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.32" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/emailTextField"
@@ -80,39 +67,48 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/restorePassBtn"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/repeatPasswordTextField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/restore_password"
-        app:layout_constraintEnd_toEndOf="@+id/passwordTextField"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/passwordTextField"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextField" />
+        android:layout_margin="@dimen/inputText_margin"
+        android:hint="@string/repeat_password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordTextField"
+        app:passwordToggleEnabled="true"
+        app:startIconDrawable="@drawable/ic_baseline_lock_open_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/repeatPasswordET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/registerBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/login_btn_margin"
-        android:text="@string/login"
-        app:layout_constraintBottom_toTopOf="@+id/createNewAccountBtn"
+        android:text="@string/register"
+        app:layout_constraintBottom_toTopOf="@+id/alreadyHaveAccountBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/restorePassBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatPasswordTextField"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/createNewAccountBtn"
+        android:id="@+id/alreadyHaveAccountBtn"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/create_new_acc_btn_margin"
-        android:text="@string/register"
+        android:text="@string/already_have_account"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-        app:layout_constraintStart_toStartOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="@+id/registerBtn"
+        app:layout_constraintStart_toStartOf="@+id/registerBtn"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

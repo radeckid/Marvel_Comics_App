@@ -25,14 +25,14 @@ class MainActivity : AppCompatActivity() {
 
         val controller = Navigation.findNavController(this, R.id.fragment_nav_host)
         binding.bottomNavigationView.setupWithNavController(controller)
-
+auth.signOut()
         if (auth.currentUser != null) {
             controller.navigate(R.id.action_loginFragment_to_comicsFragment)
         }
 
         controller.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.detailsFragment, R.id.loginFragment -> {
+                R.id.detailsFragment, R.id.loginFragment, R.id.registrationFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                 }
                 else -> {

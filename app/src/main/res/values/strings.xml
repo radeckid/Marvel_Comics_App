@@ -22,4 +22,9 @@
     <string name="authError">Authentication failed.</string>
     <string name="restore_password">Restore password</string>
     <string name="logo">Logo</string>
+    <string name="registration">Registration</string>
+    <string name="already_have_account">Already have account</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="user_created">User created</string>
+    <string name="check_passwords">Check passwords</string>
 </resources>
