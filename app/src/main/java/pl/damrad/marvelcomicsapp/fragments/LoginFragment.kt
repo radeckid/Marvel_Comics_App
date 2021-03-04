@@ -80,5 +80,10 @@ class LoginFragment : Fragment() {
         binding?.createNewAccountBtn?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
         }
+
+        binding?.restorePassBtn?.setOnClickListener {
+            val email = binding?.emailET?.text.toString()
+            userViewModel.restorePassword(email, requireContext())
+        }
     }
 }

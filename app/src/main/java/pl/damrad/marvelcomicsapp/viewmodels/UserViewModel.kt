@@ -40,8 +40,8 @@ class UserViewModel(
         userRepository.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             when {
                 task.isSuccessful -> {
-                    task.result?.user?.let { user ->
-                        _toast.value = user.email
+                    task.result?.user?.let { _ ->
+                        _toast.value = context.getString(R.string.logged_in)
                         _authStatus.value = true
                     }
                 }
@@ -84,6 +84,22 @@ class UserViewModel(
             }
         }
         onToastShown()
+    }
+
+    fun signOut() {
+        userRepository.signOut()
+        _authStatus.value = false
+    }
+
+    fun restorePassword(email: String, context: Context) {
+        if (userRepository.isValidEmail(email)) {
+            userRepository.restorePassword(email)
+            _toast.value = context.getString(R.string.check_your_email)
+            onToastShown()
+        } else {
+            _toast.value = context.getString(R.string.enter_the_address_in_the_field)
+            onToastShown()
+        }
     }
 
     fun onToastShown() {

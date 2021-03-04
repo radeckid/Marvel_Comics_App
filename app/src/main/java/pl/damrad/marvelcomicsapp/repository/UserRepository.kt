@@ -30,4 +30,12 @@ class UserRepository {
     fun comparePasswords(target: CharSequence?, target2: CharSequence?): Boolean {
         return !target.isNullOrEmpty() && !target2.isNullOrEmpty() && target == target2
     }
+
+    fun signOut() {
+        auth.signOut()
+    }
+
+    fun restorePassword(email: String) {
+        auth.sendPasswordResetEmail(email)
+    }
 }

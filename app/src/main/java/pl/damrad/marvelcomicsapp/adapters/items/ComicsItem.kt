@@ -2,6 +2,7 @@ package pl.damrad.marvelcomicsapp.adapters.items
 
 import android.os.Parcel
 import android.os.Parcelable
+import java.io.Serializable
 
 class ComicsItem(
     val title: String?,
