@@ -1,12 +1,10 @@
 package pl.damrad.marvelcomicsapp.viewmodels
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.repository.UserRepository
 
 class UserViewModel(
@@ -31,7 +29,12 @@ class UserViewModel(
     private val _userCreateStatus: MutableLiveData<Boolean> = MutableLiveData()
     val userCreateStatus: LiveData<Boolean> get() = _userCreateStatus
 
-    fun signIn(email: String, password: String, context: Context) = viewModelScope.launch {
+    fun signIn(
+        email: String,
+        password: String,
+        loggedInText: String,
+        authErrorText: String
+    ) = viewModelScope.launch {
         val checkEmail = userRepository.isValidEmail(email)
         val checkPass = userRepository.isValidPassword(password)
 
@@ -40,20 +43,27 @@ class UserViewModel(
         userRepository.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             when {
                 task.isSuccessful -> {
-                    task.result?.user?.let { user ->
-                        _toast.value = user.email
+                    task.result?.user?.let {
+                        _toast.value = loggedInText
                         _authStatus.value = true
                     }
                 }
                 else -> {
-                    _toast.value = context.getString(R.string.authError)
+                    _toast.value = authErrorText
                     _authStatus.value = false
                 }
             }
         }
     }
 
-    fun signUp(email: String, password: String, password2: String, context: Context) = viewModelScope.launch {
+    fun signUp(
+        email: String,
+        password: String,
+        password2: String,
+        comparePassErrorText: String,
+        createSuccessText: String,
+        authErrorText: String
+    ) = viewModelScope.launch {
         val checkEmail = userRepository.isValidEmail(email)
         val checkPass = userRepository.isValidPassword(password)
         val checkPass2 = userRepository.isValidPassword(password2)
@@ -63,7 +73,7 @@ class UserViewModel(
                 return@launch
             }
             !comparePasswords(password, password2) -> {
-                _toast.value = context.getString(R.string.check_passwords)
+                _toast.value = comparePassErrorText
                 onToastShown()
                 return@launch
             }
@@ -72,18 +82,34 @@ class UserViewModel(
         userRepository.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             when {
                 task.isSuccessful -> {
-                    task.result?.user?.let { user ->
-                        _toast.value = context.getString(R.string.user_created)
+                    task.result?.user?.let {
+                        _toast.value = createSuccessText
                         _userCreateStatus.value = true
                     }
                 }
                 else -> {
-                    _toast.value = task.exception?.message ?: context.getString(R.string.authError)
+                    _toast.value = task.exception?.message ?: authErrorText
                     _userCreateStatus.value = false
                 }
             }
         }
         onToastShown()
+    }
+
+    fun signOut() {
+        userRepository.signOut()
+        _authStatus.value = false
+    }
+
+    fun restorePassword(email: String, successText: String, errorText: String) {
+        if (userRepository.isValidEmail(email)) {
+            userRepository.restorePassword(email)
+            _toast.value = successText
+            onToastShown()
+        } else {
+            _toast.value = errorText
+            onToastShown()
+        }
     }
 
     fun onToastShown() {

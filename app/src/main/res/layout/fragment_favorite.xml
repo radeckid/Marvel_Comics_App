@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.ComicsFragment">
+    tools:context=".fragments.FavoriteFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -16,11 +16,9 @@
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:menu="@menu/all_comics_menu"
-            app:title="@string/app_name" />
+            app:title="@string/favorite" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -36,39 +34,5 @@
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
         tools:itemCount="10"
         tools:listitem="@layout/item_comics" />
-
-    <ProgressBar
-        android:id="@+id/comicsLoadingPB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-
-    <TextView
-        android:id="@+id/connectionState"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@color/networkError"
-        android:fontFamily="@font/roboto_bold"
-        android:text="@string/check_internet_connection"
-        android:textAlignment="center"
-        android:textColor="@color/onSecoundText"
-        android:visibility="gone" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/crashFab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/crashfab_margin"
-        android:contentDescription="@string/error_button"
-        android:src="@drawable/ic_baseline_bug_report_24"
-        app:fabSize="mini" />
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

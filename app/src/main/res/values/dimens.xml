@@ -7,4 +7,11 @@
     <dimen name="login_btn_margin">16dp</dimen>
     <dimen name="create_new_acc_btn_margin">16dp</dimen>
     <dimen name="crashfab_margin">16dp</dimen>
+    <dimen name="icon_margin">8dp</dimen>
+    <dimen name="comics_image_margin">116dp</dimen>
+    <dimen name="start_comics_margin">16dp</dimen>
+    <dimen name="horizontal_comics_margin">16dp</dimen>
+    <dimen name="vertical_comics_margin">8dp</dimen>
+    <dimen name="comics_text_padding">8dp</dimen>
+    <dimen name="cardview_round_radius">8dp</dimen>
 </resources>

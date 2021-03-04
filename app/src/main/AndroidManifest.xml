@@ -14,7 +14,9 @@
         android:roundIcon="@drawable/ic_icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.MarvelComicsApp">
-        <activity android:name="pl.damrad.marvelcomicsapp.activity.MainActivity">
+        <activity
+            android:name="pl.damrad.marvelcomicsapp.activity.MainActivity"
+            android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -74,11 +74,25 @@ class LoginFragment : Fragment() {
         binding?.loginBtn?.setOnClickListener {
             val password = binding?.passwordET?.text.toString()
             val email = binding?.emailET?.text.toString()
-            userViewModel.signIn(email, password, view.context.applicationContext)
+            userViewModel.signIn(
+                email,
+                password,
+                requireContext().getString(R.string.logged_in),
+                requireContext().getString(R.string.authError)
+            )
         }
 
         binding?.createNewAccountBtn?.setOnClickListener {
             findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
+        }
+
+        binding?.restorePassBtn?.setOnClickListener {
+            val email = binding?.emailET?.text.toString()
+            userViewModel.restorePassword(
+                email,
+                requireContext().getString(R.string.check_your_email),
+                requireContext().getString(R.string.enter_the_address_in_the_field)
+            )
         }
     }
 }
