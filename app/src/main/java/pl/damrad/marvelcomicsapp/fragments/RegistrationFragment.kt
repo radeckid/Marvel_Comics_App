@@ -85,7 +85,14 @@ class RegistrationFragment : Fragment() {
             val password = binding?.passwordET?.text.toString()
             val password2 = binding?.repeatPasswordET?.text.toString()
             val email = binding?.emailET?.text.toString()
-            userViewModel.signUp(email, password, password2, view.context)
+            userViewModel.signUp(
+                email,
+                password,
+                password2,
+                requireContext().getString(R.string.check_passwords),
+                requireContext().getString(R.string.user_created),
+                requireContext().getString(R.string.authError)
+            )
         }
     }
 }

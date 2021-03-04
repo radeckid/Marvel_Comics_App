@@ -29,10 +29,7 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val bundle = this.arguments
-        if (bundle != null) {
-            comicsItem = bundle.getParcelable(Key.COMIC_BUNDLE)
-        }
+        comicsItem = arguments?.getParcelable(Key.COMIC_BUNDLE)
         sharedElementEnterTransition = TransitionInflater.from(requireContext())
             .inflateTransition(R.transition.shared_image)
     }
