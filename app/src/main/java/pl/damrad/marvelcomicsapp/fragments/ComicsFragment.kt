@@ -22,13 +22,10 @@ class ComicsFragment : Fragment() {
     var binding: FragmentComicsBinding? = null
 
     private val mainViewModel: MainViewModel by viewModel()
-    private val userViewModel: UserViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val bind = FragmentComicsBinding.inflate(inflater, container, false).apply {
-            userVM = userViewModel
             mainVM = mainViewModel
-            lifecycleOwner = this@ComicsFragment
             fragment = this@ComicsFragment
         }
         binding = bind
@@ -55,7 +52,7 @@ class ComicsFragment : Fragment() {
         binding?.toolbar?.setOnMenuItemClickListener { item ->
             when(item.itemId) {
                 R.id.logoutBtn -> {
-                    userViewModel.signOut()
+                    mainViewModel.signOut()
                     findNavController().navigate(R.id.action_comicsFragment_to_loginFragment)
                     true
                 }

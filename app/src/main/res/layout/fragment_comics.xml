@@ -10,10 +10,6 @@
             type="pl.damrad.marvelcomicsapp.fragments.ComicsFragment" />
 
         <variable
-            name="userVM"
-            type="pl.damrad.marvelcomicsapp.viewmodels.UserViewModel" />
-
-        <variable
             name="mainVM"
             type="pl.damrad.marvelcomicsapp.viewmodels.MainViewModel" />
 

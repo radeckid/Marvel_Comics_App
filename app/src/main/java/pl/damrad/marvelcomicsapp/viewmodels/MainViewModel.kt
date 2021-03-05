@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pl.damrad.marvelcomicsapp.repository.ComicsRepository
@@ -65,5 +66,10 @@ class MainViewModel(
 
     fun setState(state: Boolean) {
         _connectionState.postValue(state)
+    }
+
+    fun signOut() {
+        val auth = FirebaseAuth.getInstance()
+        auth.signOut()
     }
 }
