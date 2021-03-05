@@ -5,6 +5,18 @@
 
     <data>
 
+        <variable
+            name="fragment"
+            type="pl.damrad.marvelcomicsapp.fragments.DetailsFragment" />
+
+        <variable
+            name="favoriteVM"
+            type="pl.damrad.marvelcomicsapp.viewmodels.FavoriteViewModel" />
+
+        <variable
+            name="item"
+            type="pl.damrad.marvelcomicsapp.adapters.items.ComicsItem" />
+
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -43,6 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
+                app:imageUrl="@{item.imagePath}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -74,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_bold"
+                android:text="@{item.title}"
                 tools:text="Avengers #39" />
 
             <TextView
@@ -81,6 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_regular"
+                android:text="@{item.author}"
                 tools:text="written by Jason Aaron" />
 
             <androidx.core.widget.NestedScrollView
@@ -93,6 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
+                    android:text="@{item.description}"
                     tools:text="@tools:sample/lorem[35]" />
             </androidx.core.widget.NestedScrollView>
 
@@ -103,6 +119,7 @@
                 android:layout_gravity="center|bottom"
                 android:layout_margin="8dp"
                 android:fontFamily="@font/roboto_medium"
+                android:onClick="@{() -> fragment.moreDetailsOnClick(item.morePath)}"
                 android:text="@string/find_out_more"
                 android:textAllCaps="false" />
         </LinearLayout>
