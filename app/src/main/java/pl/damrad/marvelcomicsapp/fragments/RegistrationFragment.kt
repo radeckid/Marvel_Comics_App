@@ -23,7 +23,9 @@ class RegistrationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val bind = FragmentRegistrationBinding.inflate(inflater, container, false)
+        val bind = FragmentRegistrationBinding.inflate(inflater, container, false).apply {
+            fragment = this@RegistrationFragment
+        }
         binding = bind
         return bind.root
     }
@@ -35,7 +37,6 @@ class RegistrationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnClickListeners(view)
         setObservers()
     }
 
@@ -76,23 +77,18 @@ class RegistrationFragment : Fragment() {
         }
     }
 
-    private fun setOnClickListeners(view: View) {
-        binding?.alreadyHaveAccountBtn?.setOnClickListener {
-            findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
-        }
+    fun navigateToLogin() {
+        findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+    }
 
-        binding?.registerBtn?.setOnClickListener {
-            val password = binding?.passwordET?.text.toString()
-            val password2 = binding?.repeatPasswordET?.text.toString()
-            val email = binding?.emailET?.text.toString()
-            userViewModel.signUp(
-                email,
-                password,
-                password2,
-                requireContext().getString(R.string.check_passwords),
-                requireContext().getString(R.string.user_created),
-                requireContext().getString(R.string.authError)
-            )
-        }
+    fun signUp(email: String, password: String, repeatedPassword: String) {
+        userViewModel.signUp(
+            email,
+            password,
+            repeatedPassword,
+            requireContext().getString(R.string.check_passwords),
+            requireContext().getString(R.string.user_created),
+            requireContext().getString(R.string.authError)
+        )
     }
 }

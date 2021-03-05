@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="fragment"
+            type="pl.damrad.marvelcomicsapp.fragments.RegistrationFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -98,6 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_btn_margin"
+            android:onClick="@{() -> fragment.signUp(emailET.getText(), passwordET.getText(), repeatPasswordET.getText())}"
             android:text="@string/register"
             app:layout_constraintBottom_toTopOf="@+id/alreadyHaveAccountBtn"
             app:layout_constraintEnd_toEndOf="parent"
@@ -110,6 +113,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> fragment.navigateToLogin()}"
             android:layout_marginBottom="@dimen/create_new_acc_btn_margin"
             android:text="@string/already_have_account"
             app:layout_constraintBottom_toBottomOf="parent"
