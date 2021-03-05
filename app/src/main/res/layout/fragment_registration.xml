@@ -100,7 +100,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_btn_margin"
-            android:onClick="@{() -> fragment.signUp(emailET.getText(), passwordET.getText(), repeatPasswordET.getText())}"
+            android:onClick="@{() -> fragment.signUp(emailET.getText().toString(), passwordET.getText().toString(), repeatPasswordET.getText().toString())}"
             android:text="@string/register"
             app:layout_constraintBottom_toTopOf="@+id/alreadyHaveAccountBtn"
             app:layout_constraintEnd_toEndOf="parent"

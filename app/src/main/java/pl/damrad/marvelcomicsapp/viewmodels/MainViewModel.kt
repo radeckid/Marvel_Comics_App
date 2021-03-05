@@ -19,6 +19,10 @@ class MainViewModel(
     private var _listOfComicsByTitle = MutableLiveData<MarvelResponse>()
     val listOfComicsByTitle: LiveData<MarvelResponse> get() = _listOfComicsByTitle
 
+    val infoSearchTextState = MutableLiveData<Boolean>(true)
+
+    val progressBarState = MutableLiveData<Boolean>(false)
+
     private val _connectionState = MutableLiveData<Boolean>(true)
     val connectionState: LiveData<Boolean> = _connectionState
 
