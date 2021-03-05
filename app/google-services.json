@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1036792777035",
+    "project_id": "marvel-app-3c72c",
+    "storage_bucket": "marvel-app-3c72c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036792777035:android:743ea5ffaa66f581dd00ce",
+        "android_client_info": {
+          "package_name": "pl.damrad.marvelcomicsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036792777035-sm46orcd3b2ehlffmgu2sikboq0e4bku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3cywhAYu8IJOYCRpSlZd5FvWCUtqr-EE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036792777035-sm46orcd3b2ehlffmgu2sikboq0e4bku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
