@@ -19,7 +19,7 @@ class MainViewModel(
     private var _listOfComicsByTitle = MutableLiveData<MarvelResponse>()
     val listOfComicsByTitle: LiveData<MarvelResponse> get() = _listOfComicsByTitle
 
-    private val _connectionState = MutableLiveData<Boolean>()
+    private val _connectionState = MutableLiveData<Boolean>(true)
     val connectionState: LiveData<Boolean> = _connectionState
 
     private val handler = CoroutineExceptionHandler { _, throwable ->

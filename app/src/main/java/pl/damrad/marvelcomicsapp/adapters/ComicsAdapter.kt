@@ -2,6 +2,9 @@ package pl.damrad.marvelcomicsapp.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import pl.damrad.marvelcomicsapp.adapters.items.ComicsItem
@@ -37,33 +40,17 @@ class ComicsAdapter(
 
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        with(comicsList[position]) {
-            when (holder.itemViewType) {
-                VIEW_ITEM -> {
-                    val binding = (holder as ComicsViewHolder).binding
-                    binding.comicsImage.load(this!!.imagePath?.replace("portrait_uncanny", "portrait_medium")) {
-                        crossfade(true)
-                    }
-
-                    binding.comicsTitle.text = title
-                    binding.comicsAuthor.text = author
-
-                    val desc = if (description?.length!! > 150) {
-                        "${description.subSequence(0, 150)}..."
-                    } else {
-                        description
-                    }
-                    binding.comicsDescription.text = desc
-                    binding.root.setOnClickListener {
-                        clickListener.invoke(comicsList[position]!!)
-                    }
-                }
-                VIEW_LOADING -> {
-                    val binding = (holder as ProgressViewHolder).binding
-                    binding.progressBar.isIndeterminate = true
+        when (holder.itemViewType) {
+            VIEW_ITEM -> {
+                val binding = (holder as ComicsViewHolder).binding
+                comicsList[position]?.let { item -> holder.bind(item) }
+                binding.root.setOnClickListener {
+                    comicsList[position]?.let { view -> clickListener.invoke(view) }
                 }
             }
-
+            else -> {
+                (holder as ProgressViewHolder).binding.executePendingBindings()
+            }
         }
     }
 
@@ -94,7 +81,41 @@ class ComicsAdapter(
 
     override fun getItemCount(): Int = comicsList.size
 
-    class ComicsViewHolder(val binding: ItemComicsBinding) : RecyclerView.ViewHolder(binding.root)
+    class ComicsViewHolder(val binding: ItemComicsBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ComicsItem) {
+            binding.item = item
+            binding.executePendingBindings()
+        }
+    }
 
     class ProgressViewHolder(val binding: ItemLoadingBinding) : RecyclerView.ViewHolder(binding.root)
+}
+
+@BindingAdapter("app:imageUrl")
+fun loadImage(view: ImageView, imageUrl: String?) {
+    view.load(imageUrl?.replace("portrait_uncanny", "portrait_medium")) {
+        crossfade(true)
+    }
+}
+
+@BindingAdapter("app:shortDesc")
+fun shortDesc(view: TextView, description: String?) {
+    description?.let{
+        view.text = if (description.length > 150) {
+            "${description.subSequence(0, 150)}..."
+        } else {
+            description
+        }
+    }
+}
+
+@BindingAdapter("app:shortAuthors")
+fun shortAuthors(view: TextView, authors: String?) {
+    authors?.let{
+        view.text = if (authors.length > 48) {
+            "${authors.subSequence(0, 48)}..."
+        } else {
+            authors
+        }
+    }
 }

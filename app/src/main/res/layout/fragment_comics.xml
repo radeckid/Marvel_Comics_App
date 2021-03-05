@@ -5,6 +5,19 @@
 
     <data>
 
+        <variable
+            name="fragment"
+            type="pl.damrad.marvelcomicsapp.fragments.ComicsFragment" />
+
+        <variable
+            name="userVM"
+            type="pl.damrad.marvelcomicsapp.viewmodels.UserViewModel" />
+
+        <variable
+            name="mainVM"
+            type="pl.damrad.marvelcomicsapp.viewmodels.MainViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -33,7 +46,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="@{mainVM.listOfComics == null ? View.GONE : View.VISIBLE}"
+            tools:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -48,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:visibility="@{mainVM.listOfComics != null ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -64,13 +79,14 @@
             android:text="@string/check_internet_connection"
             android:textAlignment="center"
             android:textColor="@color/onSecoundText"
-            android:visibility="gone" />
+            android:visibility="@{mainVM.connectionState ? View.GONE : View.VISIBLE}" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/crashFab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
+            android:onClick="@{() -> fragment.onClickBug()}"
             android:layout_margin="@dimen/crashfab_margin"
             android:contentDescription="@string/error_button"
             android:src="@drawable/ic_baseline_bug_report_24"
