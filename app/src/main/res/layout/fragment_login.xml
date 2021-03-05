@@ -5,6 +5,15 @@
 
     <data>
 
+        <variable
+            name="fragment"
+            type="pl.damrad.marvelcomicsapp.fragments.LoginFragment" />
+
+        <variable
+            name="userVM"
+            type="pl.damrad.marvelcomicsapp.viewmodels.UserViewModel" />
+
+        <import type="android.R" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,12 +29,12 @@
             android:layout_marginTop="@dimen/banner_margin"
             android:layout_marginEnd="@dimen/banner_margin"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/logo"
             android:src="@drawable/ic_icon"
             app:layout_constraintBottom_toTopOf="@+id/welcomeTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:contentDescription="@string/logo" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -91,6 +100,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> userVM.restorePassword(emailET.getText().toString(), @string/check_your_email, @string/enter_the_address_in_the_field)}"
             android:text="@string/restore_password"
             app:layout_constraintEnd_toEndOf="@+id/passwordTextField"
             app:layout_constraintHorizontal_bias="1.0"
@@ -103,11 +113,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_btn_margin"
             android:text="@string/login"
+            android:onClick="@{() -> userVM.signIn(emailET.getText().toString(), passwordET.getText().toString(), @string/logged_in, @string/authError)}"
             app:layout_constraintBottom_toTopOf="@+id/createNewAccountBtn"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintVertical_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/restorePassBtn" />
+            app:layout_constraintTop_toBottomOf="@+id/restorePassBtn"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/createNewAccountBtn"
@@ -115,6 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/create_new_acc_btn_margin"
+            android:onClick="@{() -> fragment.navigateToRegistration()}"
             android:text="@string/register"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/loginBtn"
