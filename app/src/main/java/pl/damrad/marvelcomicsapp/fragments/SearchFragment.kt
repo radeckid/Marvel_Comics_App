@@ -64,7 +64,6 @@ class SearchFragment : Fragment() {
     }
 
 
-    @SuppressLint("SetTextI18n")
     private fun initRecyclerView() {
         adapter = ComicsAdapter() { item ->
             val bundle = Bundle()
@@ -95,7 +94,7 @@ class SearchFragment : Fragment() {
             adapter.setList(list)
             if (list.isEmpty()) {
                 mainViewModel.infoSearchTextState.value = true
-                binding?.searchInfo?.text = getString(R.string.there_is_not_comic_book) + binding?.searchView?.query?.trim() + getString(R.string.in_our_library)
+                binding?.searchInfo?.text = getString(R.string.there_is_not_comic_book_in_our_library, binding?.searchView?.query?.trim())
             } else {
                 mainViewModel.infoSearchTextState.value = false
             }
