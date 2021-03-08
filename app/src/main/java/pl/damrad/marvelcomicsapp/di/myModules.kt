@@ -21,11 +21,11 @@ val myModules = module {
     viewModel { MainViewModel(get()) }
 
     single { UserRepository() }
-    single { get<ComicsRoomDatabase>().comicsDao() }
-    single { FavoriteRepository(get()) }
     viewModel { UserViewModel(get()) }
 
     single { ComicsRoomDatabase.getDatabase(androidContext()) }
+    single { get<ComicsRoomDatabase>().comicsDao() }
+    single { FavoriteRepository(get()) }
     viewModel { FavoriteViewModel(get()) }
 }
 
