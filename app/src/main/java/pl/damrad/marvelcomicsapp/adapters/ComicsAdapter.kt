@@ -97,25 +97,3 @@ fun loadImage(view: ImageView, imageUrl: String?) {
         crossfade(true)
     }
 }
-
-@BindingAdapter("app:shortDesc")
-fun shortDesc(view: TextView, description: String?) {
-    description?.let{
-        view.text = if (description.length > 150) {
-            "${description.subSequence(0, 150)}..."
-        } else {
-            description
-        }
-    }
-}
-
-@BindingAdapter("app:shortAuthors")
-fun shortAuthors(view: TextView, authors: String?) {
-    authors?.let{
-        view.text = if (authors.length > 48) {
-            "${authors.subSequence(0, 48)}..."
-        } else {
-            authors
-        }
-    }
-}

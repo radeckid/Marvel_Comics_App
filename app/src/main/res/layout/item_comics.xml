@@ -60,7 +60,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/roboto_regular"
-                    app:shortAuthors="@{item.author}"
+                    android:text="@{item.author}"
+                    android:maxLength="48"
+                    android:ellipsize="end"
                     tools:text="written by Jason Aaron" />
 
                 <TextView
@@ -68,9 +70,11 @@
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{item.description}"
                     android:fontFamily="@font/roboto_regular"
-                    app:shortDesc="@{item.description}"
-                    tools:text="@tools:sample/lorem[20]" />
+                    android:maxLength="150"
+                    android:ellipsize="end"
+                    tools:text="@tools:sample/lorem[120]" />
 
             </LinearLayout>
         </LinearLayout>

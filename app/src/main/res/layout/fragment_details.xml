@@ -43,7 +43,6 @@
                     android:layout_gravity="center"
                     android:elevation="4dp"
                     android:gravity="center"
-                    app:elevation="4dp"
                     app:menu="@menu/detail_menu"
                     app:navigationIcon="@drawable/awesome_long_arrow_alt_left"
                     app:title="@string/details" />
