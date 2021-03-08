@@ -11,7 +11,6 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
-import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
@@ -35,7 +34,11 @@ class DetailsFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val bind = FragmentDetailsBinding.inflate(inflater, container, false)
+        val bind = FragmentDetailsBinding.inflate(inflater, container, false).apply {
+            favoriteVM = favoriteViewModel
+            item = comicsItem
+            fragment = this@DetailsFragment
+        }
         binding = bind
         return bind.root
     }
@@ -98,20 +101,12 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private fun setData() {
-        comicsItem?.let { item ->
-            binding?.detailImage?.load(item.imagePath) {
-                crossfade(true)
-            }
-            binding?.comicsTitle?.text = item.title
-            binding?.comicsAuthor?.text = item.author
-            binding?.comicsDescription?.text = item.description
-            binding?.moreBtn?.setOnClickListener {
-                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.morePath))
-                startActivity(browserIntent)
-            }
-        }
+    fun moreDetailsOnClick(path: String) {
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(path))
+        startActivity(browserIntent)
+    }
 
+    private fun setData() {
         val behaviour = binding?.let { BottomSheetBehavior.from(it.bottomSheetBehaviour) }
         behaviour?.state = BottomSheetBehavior.STATE_EXPANDED
     }

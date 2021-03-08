@@ -1,64 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="@dimen/horizontal_comics_margin"
-    android:layout_marginTop="@dimen/vertical_comics_margin"
-    android:layout_marginEnd="@dimen/horizontal_comics_margin"
-    android:layout_marginBottom="@dimen/vertical_comics_margin"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardCornerRadius="@dimen/cardview_round_radius">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="item"
+            type="pl.damrad.marvelcomicsapp.adapters.items.ComicsItem" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/comicsImage"
-            android:layout_width="@dimen/comics_image_margin"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/comics_image"
-            tools:src="@tools:sample/avatars" />
+        android:layout_marginStart="@dimen/horizontal_comics_margin"
+        android:layout_marginTop="@dimen/vertical_comics_margin"
+        android:layout_marginEnd="@dimen/horizontal_comics_margin"
+        android:layout_marginBottom="@dimen/vertical_comics_margin"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="@dimen/cardview_round_radius">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/comics_text_padding">
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/comicsTitle"
-                style="@style/TextAppearance.AppCompat.Title"
+            <ImageView
+                android:id="@+id/comicsImage"
+                android:layout_width="@dimen/comics_image_margin"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/comics_image"
+                app:imageUrl="@{item.imagePath}"
+                tools:src="@tools:sample/avatars" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_bold"
-                tools:text="Avengers #39" />
+                android:orientation="vertical"
+                android:padding="@dimen/comics_text_padding">
 
-            <TextView
-                android:id="@+id/comicsAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
-                tools:text="written by Jason Aaron" />
+                <TextView
+                    android:id="@+id/comicsTitle"
+                    style="@style/TextAppearance.AppCompat.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="@{item.title}"
+                    tools:text="Avengers #39" />
 
-            <TextView
-                android:id="@+id/comicsDescription"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/roboto_regular"
-                tools:text="@tools:sample/lorem[20]" />
+                <TextView
+                    android:id="@+id/comicsAuthor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="@{item.author}"
+                    android:maxLength="48"
+                    android:ellipsize="end"
+                    tools:text="written by Jason Aaron" />
 
+                <TextView
+                    android:id="@+id/comicsDescription"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{item.description}"
+                    android:fontFamily="@font/roboto_regular"
+                    android:maxLength="150"
+                    android:ellipsize="end"
+                    tools:text="@tools:sample/lorem[120]" />
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

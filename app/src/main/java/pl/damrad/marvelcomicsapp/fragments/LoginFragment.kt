@@ -23,7 +23,10 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val bind = FragmentLoginBinding.inflate(inflater, container, false)
+        val bind = FragmentLoginBinding.inflate(inflater, container, false).apply {
+            fragment = this@LoginFragment
+            userVM = userViewModel
+        }
         binding = bind
         return bind.root
     }
@@ -35,7 +38,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setOnClickListeners(view)
         setObservers()
     }
 
@@ -66,33 +68,9 @@ class LoginFragment : Fragment() {
         userViewModel.authStatus.observe(viewLifecycleOwner) { result ->
             if (result) findNavController().navigate(R.id.action_loginFragment_to_comicsFragment)
         }
-
     }
 
-    private fun setOnClickListeners(view: View) {
-
-        binding?.loginBtn?.setOnClickListener {
-            val password = binding?.passwordET?.text.toString()
-            val email = binding?.emailET?.text.toString()
-            userViewModel.signIn(
-                email,
-                password,
-                requireContext().getString(R.string.logged_in),
-                requireContext().getString(R.string.authError)
-            )
-        }
-
-        binding?.createNewAccountBtn?.setOnClickListener {
-            findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
-        }
-
-        binding?.restorePassBtn?.setOnClickListener {
-            val email = binding?.emailET?.text.toString()
-            userViewModel.restorePassword(
-                email,
-                requireContext().getString(R.string.check_your_email),
-                requireContext().getString(R.string.enter_the_address_in_the_field)
-            )
-        }
+    fun navigateToRegistration() {
+        findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
     }
 }

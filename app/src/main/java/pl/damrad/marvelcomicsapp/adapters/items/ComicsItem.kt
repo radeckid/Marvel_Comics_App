@@ -1,7 +1,7 @@
 package pl.damrad.marvelcomicsapp.adapters.items
 
 import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 class ComicsItem(

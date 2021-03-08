@@ -22,10 +22,12 @@ class ComicsFragment : Fragment() {
     var binding: FragmentComicsBinding? = null
 
     private val mainViewModel: MainViewModel by viewModel()
-    private val userViewModel: UserViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val bind = FragmentComicsBinding.inflate(inflater, container, false)
+        val bind = FragmentComicsBinding.inflate(inflater, container, false).apply {
+            mainVM = mainViewModel
+            fragment = this@ComicsFragment
+        }
         binding = bind
         return bind.root
     }
@@ -38,35 +40,24 @@ class ComicsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.comicsLoadingPB?.visibility = View.VISIBLE
-        binding?.recyclerView?.visibility = View.INVISIBLE
-
         setToolbar()
         initRecyclerView()
-        connectionObserve()
+    }
 
-        binding?.crashFab?.setOnClickListener {
-            throw NullPointerException("Look mom null pointer in kotlin!")
-        }
-
+     fun onClickBug(){
+        throw NullPointerException("Look mom null pointer in kotlin!")
     }
 
     private fun setToolbar() {
         binding?.toolbar?.setOnMenuItemClickListener { item ->
             when(item.itemId) {
                 R.id.logoutBtn -> {
-                    userViewModel.signOut()
+                    mainViewModel.signOut()
                     findNavController().navigate(R.id.action_comicsFragment_to_loginFragment)
                     true
                 }
                 else -> false
             }
-        }
-    }
-
-    private fun connectionObserve() {
-        mainViewModel.connectionState.observe(viewLifecycleOwner) {
-            binding?.connectionState?.visibility = if (it) View.GONE else View.VISIBLE
         }
     }
 
@@ -97,12 +88,7 @@ class ComicsFragment : Fragment() {
         mainViewModel.listOfComics.observe(viewLifecycleOwner) {
             isLoading = false
             adapter.setLoadingBar(false)
-
-            binding?.comicsLoadingPB?.visibility = View.GONE
-            binding?.recyclerView?.visibility = View.VISIBLE
-
             val list = ComicItemCreator.createComicItem(it)
-
             adapter.addNewComicsToList(list)
         }
     }

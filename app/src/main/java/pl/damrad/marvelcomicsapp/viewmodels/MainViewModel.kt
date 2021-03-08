@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import pl.damrad.marvelcomicsapp.repository.ComicsRepository
@@ -19,7 +20,11 @@ class MainViewModel(
     private var _listOfComicsByTitle = MutableLiveData<MarvelResponse>()
     val listOfComicsByTitle: LiveData<MarvelResponse> get() = _listOfComicsByTitle
 
-    private val _connectionState = MutableLiveData<Boolean>()
+    val infoSearchTextState = MutableLiveData<Boolean>(true)
+
+    val progressBarState = MutableLiveData<Boolean>(false)
+
+    private val _connectionState = MutableLiveData<Boolean>(true)
     val connectionState: LiveData<Boolean> = _connectionState
 
     private val handler = CoroutineExceptionHandler { _, throwable ->
@@ -61,5 +66,10 @@ class MainViewModel(
 
     fun setState(state: Boolean) {
         _connectionState.postValue(state)
+    }
+
+    fun signOut() {
+        val auth = FirebaseAuth.getInstance()
+        auth.signOut()
     }
 }
