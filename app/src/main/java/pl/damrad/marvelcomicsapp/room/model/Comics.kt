@@ -7,10 +7,11 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "favorite_comics", indices = [Index(value = ["morePath"], unique = true)])
 data class Comics(
-    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
     val title: String?,
     val author: String?,
     val description: String?,
     val imagePath: String?,
-    @ColumnInfo(name = "morePath") val morePath: String?
+    @ColumnInfo(name = "morePath") val morePath: String?,
+    var loggedUser: String? = null
 )

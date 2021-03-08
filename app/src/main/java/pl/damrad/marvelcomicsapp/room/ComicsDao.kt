@@ -12,12 +12,12 @@ interface ComicsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertComics(comics: Comics)
 
-    @Query("DELETE FROM favorite_comics WHERE morePath=:morePath")
-    suspend fun deleteComics(morePath: String)
+    @Query("DELETE FROM favorite_comics WHERE morePath=:morePath AND loggedUser=:user")
+    suspend fun deleteComics(morePath: String, user: String)
 
-    @Query("SELECT * FROM favorite_comics ORDER BY id ASC")
-    fun getAllFavorites(): Flow<List<Comics>>
+    @Query("SELECT * FROM favorite_comics WHERE loggedUser=:user ORDER BY id ASC")
+    fun getAllFavorites(user: String): Flow<List<Comics>>
 
-    @Query("SELECT * FROM favorite_comics WHERE morePath=:morePath")
-    fun getComicByDetailPath(morePath: String): LiveData<ComicsItem?>
+    @Query("SELECT * FROM favorite_comics WHERE morePath=:morePath AND loggedUser=:user")
+    fun getComicByDetailPath(morePath: String, user: String): LiveData<ComicsItem?>
 }

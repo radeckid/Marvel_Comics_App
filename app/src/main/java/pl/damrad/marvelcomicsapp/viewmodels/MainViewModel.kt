@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import pl.damrad.marvelcomicsapp.repository.ComicsRepository
 import pl.damrad.marvelcomicsapp.retrofit.response.MarvelResponse
 
