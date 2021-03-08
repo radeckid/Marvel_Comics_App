@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.adapters.ComicsAdapter
+import pl.damrad.marvelcomicsapp.adapters.items.ComicsItem
 import pl.damrad.marvelcomicsapp.databinding.FragmentFavoriteBinding
 import pl.damrad.marvelcomicsapp.other.Key
 import pl.damrad.marvelcomicsapp.viewmodels.FavoriteViewModel
@@ -18,6 +19,8 @@ class FavoriteFragment : Fragment() {
     private var binding: FragmentFavoriteBinding? = null
 
     private val favoriteViewModel: FavoriteViewModel by viewModel()
+
+    private lateinit var adapter: ComicsAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,7 +43,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setRecycler() {
-        val adapter = ComicsAdapter { item ->
+        adapter = ComicsAdapter { item ->
             val bundle = Bundle()
             bundle.putParcelable(Key.COMIC_BUNDLE, item)
             findNavController().navigate(R.id.action_favoriteFragment_to_detailsFragment, bundle)

@@ -33,7 +33,7 @@ class DetailsFragment : Fragment() {
             .inflateTransition(R.transition.shared_image)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val bind = FragmentDetailsBinding.inflate(inflater, container, false).apply {
             favoriteVM = favoriteViewModel
             item = comicsItem
@@ -63,7 +63,7 @@ class DetailsFragment : Fragment() {
 
         comicsItem?.morePath?.let { path ->
             val item = binding?.toolbar?.menu?.findItem(R.id.favoriteBtn)
-            favoriteViewModel.getComicByDetailPath(path).observe(viewLifecycleOwner) { comic ->
+            favoriteViewModel.getComicByDetailPath(path)?.observe(viewLifecycleOwner) { comic ->
                 comic?.let {
                     item?.icon = getDrawable(requireContext(), R.drawable.ic_baseline_favorite_24)
                     favoriteViewModel.favoriteComicState.value = true
@@ -76,7 +76,6 @@ class DetailsFragment : Fragment() {
 
         binding?.toolbar?.setOnMenuItemClickListener { item ->
             val comic = Comics(
-                id = null,
                 title = comicsItem?.title,
                 author = comicsItem?.author,
                 description = comicsItem?.description,
