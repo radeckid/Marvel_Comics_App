@@ -15,7 +15,6 @@ import pl.damrad.marvelcomicsapp.databinding.FragmentComicsBinding
 import pl.damrad.marvelcomicsapp.other.ComicItemCreator
 import pl.damrad.marvelcomicsapp.other.Key
 import pl.damrad.marvelcomicsapp.viewmodels.MainViewModel
-import pl.damrad.marvelcomicsapp.viewmodels.UserViewModel
 
 class ComicsFragment : Fragment() {
 
@@ -27,6 +26,7 @@ class ComicsFragment : Fragment() {
         val bind = FragmentComicsBinding.inflate(inflater, container, false).apply {
             mainVM = mainViewModel
             fragment = this@ComicsFragment
+            lifecycleOwner = viewLifecycleOwner
         }
         binding = bind
         return bind.root
@@ -44,13 +44,13 @@ class ComicsFragment : Fragment() {
         initRecyclerView()
     }
 
-     fun onClickBug(){
+    fun onClickBug() {
         throw NullPointerException("Look mom null pointer in kotlin!")
     }
 
     private fun setToolbar() {
         binding?.toolbar?.setOnMenuItemClickListener { item ->
-            when(item.itemId) {
+            when (item.itemId) {
                 R.id.logoutBtn -> {
                     mainViewModel.signOut()
                     findNavController().navigate(R.id.action_comicsFragment_to_loginFragment)
