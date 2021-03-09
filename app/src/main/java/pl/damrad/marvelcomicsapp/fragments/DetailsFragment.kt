@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.core.view.ViewCompat
+import androidx.databinding.BindingAdapter
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
+import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
@@ -108,5 +111,12 @@ class DetailsFragment : Fragment() {
     private fun setData() {
         val behaviour = binding?.let { BottomSheetBehavior.from(it.bottomSheetBehaviour) }
         behaviour?.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+}
+
+@BindingAdapter("app:uncannyImageUrl")
+fun loadDetailedImage(view: ImageView, imageUrl: String?) {
+    view.load(imageUrl?.replace("portrait_uncanny", "detail")) {
+        crossfade(true)
     }
 }

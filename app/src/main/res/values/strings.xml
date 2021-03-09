@@ -33,4 +33,5 @@
     <string name="logout">Logout</string>
     <string name="check_your_email">Check your email address</string>
     <string name="enter_the_address_in_the_field">Enter the address in the email field</string>
+    <string name="detail_image">Detail Image</string>
 </resources>
