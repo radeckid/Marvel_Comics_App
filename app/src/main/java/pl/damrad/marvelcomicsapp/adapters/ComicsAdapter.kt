@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.adapters.items.ComicsItem
 import pl.damrad.marvelcomicsapp.databinding.ItemComicsBinding
 import pl.damrad.marvelcomicsapp.databinding.ItemLoadingBinding
