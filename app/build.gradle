@@ -8,6 +8,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release_config {
+
+            storeFile file(' ')
+            storePassword ' '
+            keyAlias ' '
+            keyPassword ' '
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -19,16 +28,13 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release_config
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
-        buildTypes.each {
-            it.buildConfigField 'String', 'API_KEY', ApiKey
-            it.buildConfigField 'String', 'API_HASH', ApiHash
         }
     }
     compileOptions {
@@ -96,6 +102,7 @@ dependencies {
 
     //Okhttp
     implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:26.5.0')
