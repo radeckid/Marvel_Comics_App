@@ -2,10 +2,15 @@ package pl.damrad.marvelcomicsapp.retrofit
 
 import android.content.Context
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object HttpClientBuilder {
+
+    private val interceptor =  HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 
     private val client = OkHttpClient.Builder()
 
@@ -15,6 +20,7 @@ object HttpClientBuilder {
         .client(
             client
                 .addInterceptor(NetworkConnectionInterceptor(context))
+                .addInterceptor(interceptor)
                 .build()
         )
         .build()

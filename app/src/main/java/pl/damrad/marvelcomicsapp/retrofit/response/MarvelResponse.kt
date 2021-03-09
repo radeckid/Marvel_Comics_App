@@ -1,8 +1,5 @@
 package pl.damrad.marvelcomicsapp.retrofit.response
 
-
-import com.google.gson.annotations.SerializedName
-
 data class MarvelResponse(
     val attributionHTML: String?,
     val attributionText: String?,
