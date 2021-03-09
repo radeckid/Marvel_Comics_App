@@ -8,15 +8,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        release_config {
-
-            storeFile file(' ')
-            storePassword ' '
-            keyAlias ' '
-            keyPassword ' '
-        }
-    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -28,7 +19,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.release_config
     }
 
     buildTypes {
