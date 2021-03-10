@@ -21,14 +21,9 @@
         android:focusable="true"
         app:cardCornerRadius="@dimen/cardview_round_radius">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/comicsImage"
@@ -38,45 +33,63 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/comics_image"
                 app:imageUrl="@{item.imagePath}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@tools:sample/avatars" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/comicsTitle"
+                style="@style/TextAppearance.AppCompat.Title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="@dimen/comics_text_padding">
+                android:fontFamily="@font/roboto_bold"
+                android:paddingStart="@dimen/comics_text_padding"
+                android:paddingTop="@dimen/comics_text_padding"
+                android:paddingEnd="@dimen/comics_text_padding"
+                android:text="@{item.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/comicsImage"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Avengers #39" />
 
-                <TextView
-                    android:id="@+id/comicsTitle"
-                    style="@style/TextAppearance.AppCompat.Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="@{item.title}"
-                    tools:text="Avengers #39" />
+            <TextView
+                android:id="@+id/comicsAuthor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLines="1"
+                android:paddingStart="@dimen/comics_text_padding"
+                android:paddingEnd="@dimen/comics_text_padding"
+                android:text="@{item.author}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/comicsTitle"
+                app:layout_constraintTop_toBottomOf="@id/comicsTitle"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="written by Jason Aaron" />
 
-                <TextView
-                    android:id="@+id/comicsAuthor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_regular"
-                    android:text="@{item.author}"
-                    android:maxLength="48"
-                    android:ellipsize="end"
-                    tools:text="written by Jason Aaron" />
+            <TextView
+                android:id="@+id/comicsDescription"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLines="5"
+                android:paddingStart="@dimen/comics_text_padding"
+                android:paddingEnd="@dimen/comics_text_padding"
+                android:paddingBottom="@dimen/comics_text_padding"
+                android:text="@{item.description}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/comicsImage"
+                app:layout_constraintTop_toBottomOf="@id/comicsAuthor"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="@tools:sample/lorem[120]" />
 
-                <TextView
-                    android:id="@+id/comicsDescription"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{item.description}"
-                    android:fontFamily="@font/roboto_regular"
-                    android:maxLength="150"
-                    android:ellipsize="end"
-                    tools:text="@tools:sample/lorem[120]" />
-
-            </LinearLayout>
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

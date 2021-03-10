@@ -50,7 +50,11 @@ class LoginFragment : Fragment() {
         }
 
         userViewModel.isEmailValid.observe(viewLifecycleOwner) { result ->
-            if (!result) binding?.emailET?.error = getString(R.string.emailError)
+            if (!result) {
+                binding?.emailTextField?.error = getString(R.string.emailError)
+            } else {
+                binding?.emailTextField?.error = null
+            }
         }
 
         binding?.emailET?.doOnTextChanged { text, _, _, _ ->
@@ -58,7 +62,11 @@ class LoginFragment : Fragment() {
         }
 
         userViewModel.isPasswordValid.observe(viewLifecycleOwner) { result ->
-            if (!result) binding?.passwordET?.error = getString(R.string.passwordError)
+            if (!result) {
+                binding?.passwordTextField?.error = getString(R.string.passwordError)
+            } else {
+                binding?.passwordTextField?.error = null
+            }
         }
 
         binding?.passwordET?.doOnTextChanged { text, _, _, _ ->

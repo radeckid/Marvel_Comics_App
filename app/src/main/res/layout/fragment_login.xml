@@ -13,7 +13,6 @@
             name="userVM"
             type="pl.damrad.marvelcomicsapp.viewmodels.UserViewModel" />
 
-        <import type="android.R" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,7 +29,7 @@
             android:layout_marginEnd="@dimen/banner_margin"
             android:adjustViewBounds="true"
             android:contentDescription="@string/logo"
-            android:src="@drawable/ic_icon"
+            android:src="@drawable/shield"
             app:layout_constraintBottom_toTopOf="@+id/welcomeTV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -71,6 +70,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailET"
                 android:layout_width="match_parent"
+                android:fontFamily="@font/roboto_light"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +92,7 @@
                 android:id="@+id/passwordET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,6 +100,7 @@
             android:id="@+id/restorePassBtn"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:layout_height="wrap_content"
             android:onClick="@{() -> userVM.restorePassword(emailET.getText().toString(), @string/check_your_email, @string/enter_the_address_in_the_field)}"
             android:text="@string/restore_password"
@@ -112,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_btn_margin"
+            android:fontFamily="@font/roboto_bold"
             android:text="@string/login"
             android:onClick="@{() -> userVM.signIn(emailET.getText().toString(), passwordET.getText().toString(), @string/logged_in, @string/authError)}"
             app:layout_constraintBottom_toTopOf="@+id/createNewAccountBtn"
@@ -125,6 +128,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_bold"
             android:layout_marginBottom="@dimen/create_new_acc_btn_margin"
             android:onClick="@{() -> fragment.navigateToRegistration()}"
             android:text="@string/register"

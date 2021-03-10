@@ -84,10 +84,10 @@
             android:layout_gravity="bottom|end"
             android:onClick="@{() -> fragment.onClickBug()}"
             android:layout_margin="@dimen/crashfab_margin"
+            android:visibility="gone"
             android:contentDescription="@string/error_button"
             android:src="@drawable/ic_baseline_bug_report_24"
             app:fabSize="mini" />
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
