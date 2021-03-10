@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.databinding.FragmentRegistrationBinding
@@ -71,16 +72,16 @@ class RegistrationFragment : Fragment() {
             when (state) {
                 is UIState.Success -> {
                     findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
-                    Toast.makeText(context, R.string.user_created, Toast.LENGTH_LONG).show()
+                    Toasty.success(requireContext(), R.string.user_created, Toast.LENGTH_LONG, true).show()
                 }
                 is UIState.Warning -> {
-                    Toast.makeText(context, R.string.check_passwords, Toast.LENGTH_LONG).show()
+                    Toasty.warning(requireContext(), R.string.check_passwords, Toast.LENGTH_LONG, true).show()
                 }
                 is UIState.Error -> {
-                    Toast.makeText(context, R.string.authError, Toast.LENGTH_LONG).show()
+                    Toasty.error(requireContext(), R.string.authError, Toast.LENGTH_LONG, true).show()
                 }
                 is UIState.ErrorResponse -> {
-                    state.text?.let { Toast.makeText(context, it, Toast.LENGTH_LONG).show() }
+                    state.text?.let { Toasty.error(requireContext(), it, Toast.LENGTH_LONG, true).show() }
                 }
             }
         }

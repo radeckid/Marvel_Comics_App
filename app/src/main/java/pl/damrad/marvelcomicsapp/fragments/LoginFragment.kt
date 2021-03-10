@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.databinding.FragmentLoginBinding
@@ -63,21 +64,21 @@ class LoginFragment : Fragment() {
             when (state) {
                 is UIState.Success -> {
                     findNavController().navigate(R.id.action_loginFragment_to_comicsFragment)
-                    Toast.makeText(context, R.string.logged_in, Toast.LENGTH_SHORT).show()
+                    Toasty.success(requireContext(), R.string.logged_in, Toast.LENGTH_SHORT, true).show()
                 }
                 is UIState.Error -> {
-                    Toast.makeText(context, R.string.authError, Toast.LENGTH_LONG).show()
+                    Toasty.error(requireContext(), R.string.authError, Toast.LENGTH_LONG, true).show()
                 }
             }
         }
 
         userViewModel.restorePassState.observe(viewLifecycleOwner) { state ->
-            when(state) {
+            when (state) {
                 is UIState.Success -> {
-                    Toast.makeText(context, R.string.check_your_email, Toast.LENGTH_LONG).show()
+                    Toasty.success(requireContext(), R.string.check_your_email, Toast.LENGTH_LONG, true).show()
                 }
                 is UIState.Error -> {
-                    Toast.makeText(context, R.string.enter_the_address_in_the_field, Toast.LENGTH_LONG).show()
+                    Toasty.error(requireContext(), R.string.enter_the_address_in_the_field, Toast.LENGTH_LONG, true).show()
                 }
             }
         }
