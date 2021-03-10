@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="fragment"
             type="pl.damrad.marvelcomicsapp.fragments.RegistrationFragment" />
@@ -23,11 +24,11 @@
             android:fontFamily="@font/roboto_bold"
             android:text="@string/registration"
             android:textSize="32sp"
-            app:layout_constraintVertical_bias="0.9"
             app:layout_constraintBottom_toTopOf="@+id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -52,6 +53,7 @@
                 android:id="@+id/emailET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -72,6 +74,7 @@
                 android:id="@+id/passwordET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,6 +95,7 @@
                 android:id="@+id/repeatPasswordET"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_light"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,6 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_btn_margin"
+            android:fontFamily="@font/roboto_bold"
             android:onClick="@{() -> fragment.signUp(emailET.getText().toString(), passwordET.getText().toString(), repeatPasswordET.getText().toString())}"
             android:text="@string/register"
             app:layout_constraintBottom_toTopOf="@+id/alreadyHaveAccountBtn"
@@ -113,8 +118,9 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="@{() -> fragment.navigateToLogin()}"
             android:layout_marginBottom="@dimen/create_new_acc_btn_margin"
+            android:fontFamily="@font/roboto_bold"
+            android:onClick="@{() -> fragment.navigateToLogin()}"
             android:text="@string/already_have_account"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/registerBtn"
