@@ -8,9 +8,11 @@ import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.databinding.FragmentRegistrationBinding
+import pl.damrad.marvelcomicsapp.other.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.UserViewModel
 
 class RegistrationFragment : Fragment() {
@@ -25,6 +27,7 @@ class RegistrationFragment : Fragment() {
     ): View {
         val bind = FragmentRegistrationBinding.inflate(inflater, container, false).apply {
             fragment = this@RegistrationFragment
+            userVM = userViewModel
         }
         binding = bind
         return bind.root
@@ -41,23 +44,12 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setObservers() {
-        userViewModel.toast.observe(viewLifecycleOwner) { text ->
-            text?.let {
-                Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-                userViewModel.onToastShown()
-            }
-        }
-
         userViewModel.isEmailValid.observe(viewLifecycleOwner) { result ->
             if (!result) {
                 binding?.emailTextField?.error = getString(R.string.emailError)
             } else {
                 binding?.emailTextField?.error = null
             }
-        }
-
-        binding?.emailET?.doOnTextChanged { text, _, _, _ ->
-            userViewModel.checkEmailValid(text)
         }
 
         userViewModel.isPasswordValid.observe(viewLifecycleOwner) { result ->
@@ -68,10 +60,6 @@ class RegistrationFragment : Fragment() {
             }
         }
 
-        binding?.passwordET?.doOnTextChanged { text, _, _, _ ->
-            userViewModel.checkPasswordValid(text)
-        }
-
         userViewModel.isRepeatedPasswordValid.observe(viewLifecycleOwner) { result ->
             if (!result) {
                 binding?.repeatPasswordTextField?.error = getString(R.string.passwordError)
@@ -80,27 +68,26 @@ class RegistrationFragment : Fragment() {
             }
         }
 
-        binding?.repeatPasswordET?.doOnTextChanged { text, _, _, _ ->
-            userViewModel.checkRepeatedPasswordValid(text)
-        }
-
-        userViewModel.userCreateStatus.observe(viewLifecycleOwner) { result ->
-            if (result) findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+        userViewModel.userCreateState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UIState.Success -> {
+                    findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+                    Toasty.success(requireContext(), R.string.user_created, Toast.LENGTH_LONG, true).show()
+                }
+                is UIState.Warning -> {
+                    Toasty.warning(requireContext(), R.string.check_passwords, Toast.LENGTH_LONG, true).show()
+                }
+                is UIState.Error -> {
+                    Toasty.error(requireContext(), R.string.authError, Toast.LENGTH_LONG, true).show()
+                }
+                is UIState.ErrorResponse -> {
+                    state.text?.let { Toasty.error(requireContext(), it, Toast.LENGTH_LONG, true).show() }
+                }
+            }
         }
     }
 
     fun navigateToLogin() {
         findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
-    }
-
-    fun signUp(email: String, password: String, repeatedPassword: String) {
-        userViewModel.signUp(
-            email,
-            password,
-            repeatedPassword,
-            requireContext().getString(R.string.check_passwords),
-            requireContext().getString(R.string.user_created),
-            requireContext().getString(R.string.authError)
-        )
     }
 }

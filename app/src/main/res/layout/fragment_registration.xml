@@ -8,6 +8,10 @@
         <variable
             name="fragment"
             type="pl.damrad.marvelcomicsapp.fragments.RegistrationFragment" />
+
+        <variable
+            name="userVM"
+            type="pl.damrad.marvelcomicsapp.viewmodels.UserViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -105,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/login_btn_margin"
             android:fontFamily="@font/roboto_bold"
-            android:onClick="@{() -> fragment.signUp(emailET.getText().toString(), passwordET.getText().toString(), repeatPasswordET.getText().toString())}"
+            android:onClick="@{() -> userVM.signUp(emailET.getText().toString(), passwordET.getText().toString(), repeatPasswordET.getText().toString())}"
             android:text="@string/register"
             app:layout_constraintBottom_toTopOf="@+id/alreadyHaveAccountBtn"
             app:layout_constraintEnd_toEndOf="parent"
