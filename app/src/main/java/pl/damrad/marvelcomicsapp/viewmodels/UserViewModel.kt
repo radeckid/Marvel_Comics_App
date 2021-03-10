@@ -1,56 +1,58 @@
 package pl.damrad.marvelcomicsapp.viewmodels
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import pl.damrad.marvelcomicsapp.other.UIState
 import pl.damrad.marvelcomicsapp.repository.UserRepository
 
 class UserViewModel(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    private val _isEmailValid: MutableLiveData<Boolean> = MutableLiveData()
-    val isEmailValid: LiveData<Boolean> get() = _isEmailValid
+    val isEmailValid: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val _isPasswordValid: MutableLiveData<Boolean> = MutableLiveData()
-    val isPasswordValid: LiveData<Boolean> get() = _isPasswordValid
+    val isPasswordValid: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val _isRepeatedPasswordValid: MutableLiveData<Boolean> = MutableLiveData()
-    val isRepeatedPasswordValid: LiveData<Boolean> get() = _isRepeatedPasswordValid
+    val isRepeatedPasswordValid: MutableLiveData<Boolean> = MutableLiveData()
 
-    private val _toast: MutableLiveData<String?> = MutableLiveData()
-    val toast: LiveData<String?> get() = _toast
+    val restorePassState: MutableLiveData<UIState?> = MutableLiveData()
 
-    private val _authStatus: MutableLiveData<Boolean> = MutableLiveData()
-    val authStatus: LiveData<Boolean> get() = _authStatus
+    val authState: MutableLiveData<UIState?> = MutableLiveData()
 
-    private val _userCreateStatus: MutableLiveData<Boolean> = MutableLiveData()
-    val userCreateStatus: LiveData<Boolean> get() = _userCreateStatus
+    val userCreateState: MutableLiveData<UIState?> = MutableLiveData()
 
     fun signIn(
         email: String,
         password: String,
-        loggedInText: String,
-        authErrorText: String
     ) = viewModelScope.launch {
         val checkEmail = userRepository.isValidEmail(email)
         val checkPass = userRepository.isValidPassword(password)
 
-        if (!checkEmail && !checkPass) return@launch
+        isEmailValid.value = true
+        isPasswordValid.value = true
+
+        when {
+            !checkEmail -> {
+                isEmailValid.value = false
+                return@launch
+            }
+            !checkPass -> {
+                isPasswordValid.value = false
+                return@launch
+            }
+        }
 
         userRepository.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
             when {
                 task.isSuccessful -> {
                     task.result?.user?.let {
-                        _toast.value = loggedInText
-                        _authStatus.value = true
+                        authState.value = UIState.Success
                     }
                 }
                 else -> {
-                    _toast.value = authErrorText
-                    _authStatus.value = false
+                    authState.value = UIState.Error
                 }
             }
         }
@@ -60,9 +62,6 @@ class UserViewModel(
         email: String,
         password: String,
         password2: String,
-        comparePassErrorText: String,
-        createSuccessText: String,
-        authErrorText: String
     ) = viewModelScope.launch {
         val checkEmail = userRepository.isValidEmail(email)
         val checkPass = userRepository.isValidPassword(password)
@@ -73,8 +72,7 @@ class UserViewModel(
                 return@launch
             }
             !comparePasswords(password, password2) -> {
-                _toast.value = comparePassErrorText
-                onToastShown()
+                userCreateState.value = UIState.Warning
                 return@launch
             }
         }
@@ -83,49 +81,35 @@ class UserViewModel(
             when {
                 task.isSuccessful -> {
                     task.result?.user?.let {
-                        _toast.value = createSuccessText
-                        _userCreateStatus.value = true
+                        userCreateState.value = UIState.Success
                     }
                 }
                 else -> {
-                    _toast.value = task.exception?.message ?: authErrorText
-                    _userCreateStatus.value = false
+                    userCreateState.value = UIState.Warning//task.exception?.message ?: authErrorText
                 }
             }
         }
-        onToastShown()
     }
 
-    fun signOut() {
-        userRepository.signOut()
-        _authStatus.value = false
-    }
-
-    fun restorePassword(email: String, successText: String, errorText: String) {
+    fun restorePassword(email: String) {
         if (userRepository.isValidEmail(email)) {
             userRepository.restorePassword(email)
-            _toast.value = successText
-            onToastShown()
+            restorePassState.value = UIState.Success
         } else {
-            _toast.value = errorText
-            onToastShown()
+            restorePassState.value = UIState.Error
         }
     }
 
-    fun onToastShown() {
-        _toast.value = null
-    }
-
     fun checkEmailValid(target: CharSequence?) {
-        _isEmailValid.value = userRepository.isValidEmail(target)
+        isEmailValid.value = userRepository.isValidEmail(target)
     }
 
     fun checkPasswordValid(target: CharSequence?) {
-        _isPasswordValid.value = userRepository.isValidPassword(target)
+        isPasswordValid.value = userRepository.isValidPassword(target)
     }
 
     fun checkRepeatedPasswordValid(target: CharSequence?) {
-        _isRepeatedPasswordValid.value = userRepository.isValidPassword(target)
+        isRepeatedPasswordValid.value = userRepository.isValidPassword(target)
     }
 
     private fun comparePasswords(target: CharSequence?, target2: CharSequence?): Boolean {

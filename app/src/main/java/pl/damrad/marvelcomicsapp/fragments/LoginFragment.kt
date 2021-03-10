@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.databinding.FragmentLoginBinding
+import pl.damrad.marvelcomicsapp.other.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.UserViewModel
 
 class LoginFragment : Fragment() {
@@ -42,23 +43,12 @@ class LoginFragment : Fragment() {
     }
 
     private fun setObservers() {
-        userViewModel.toast.observe(viewLifecycleOwner) { text ->
-            text?.let {
-                Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-                userViewModel.onToastShown()
-            }
-        }
-
         userViewModel.isEmailValid.observe(viewLifecycleOwner) { result ->
             if (!result) {
                 binding?.emailTextField?.error = getString(R.string.emailError)
             } else {
                 binding?.emailTextField?.error = null
             }
-        }
-
-        binding?.emailET?.doOnTextChanged { text, _, _, _ ->
-            userViewModel.checkEmailValid(text)
         }
 
         userViewModel.isPasswordValid.observe(viewLifecycleOwner) { result ->
@@ -69,12 +59,27 @@ class LoginFragment : Fragment() {
             }
         }
 
-        binding?.passwordET?.doOnTextChanged { text, _, _, _ ->
-            userViewModel.checkPasswordValid(text)
+        userViewModel.authState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UIState.Success -> {
+                    findNavController().navigate(R.id.action_loginFragment_to_comicsFragment)
+                    Toast.makeText(context, R.string.logged_in, Toast.LENGTH_SHORT).show()
+                }
+                is UIState.Error -> {
+                    Toast.makeText(context, R.string.authError, Toast.LENGTH_LONG).show()
+                }
+            }
         }
 
-        userViewModel.authStatus.observe(viewLifecycleOwner) { result ->
-            if (result) findNavController().navigate(R.id.action_loginFragment_to_comicsFragment)
+        userViewModel.restorePassState.observe(viewLifecycleOwner) { state ->
+            when(state) {
+                is UIState.Success -> {
+                    Toast.makeText(context, R.string.check_your_email, Toast.LENGTH_LONG).show()
+                }
+                is UIState.Error -> {
+                    Toast.makeText(context, R.string.enter_the_address_in_the_field, Toast.LENGTH_LONG).show()
+                }
+            }
         }
     }
 

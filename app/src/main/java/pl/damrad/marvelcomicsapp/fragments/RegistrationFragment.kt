@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.databinding.FragmentRegistrationBinding
+import pl.damrad.marvelcomicsapp.other.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.UserViewModel
 
 class RegistrationFragment : Fragment() {
@@ -41,13 +42,6 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun setObservers() {
-        userViewModel.toast.observe(viewLifecycleOwner) { text ->
-            text?.let {
-                Toast.makeText(context, text, Toast.LENGTH_LONG).show()
-                userViewModel.onToastShown()
-            }
-        }
-
         userViewModel.isEmailValid.observe(viewLifecycleOwner) { result ->
             if (!result) {
                 binding?.emailTextField?.error = getString(R.string.emailError)
@@ -84,8 +78,8 @@ class RegistrationFragment : Fragment() {
             userViewModel.checkRepeatedPasswordValid(text)
         }
 
-        userViewModel.userCreateStatus.observe(viewLifecycleOwner) { result ->
-            if (result) findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
+        userViewModel.userCreateState.observe(viewLifecycleOwner) { state ->
+            if (state == UIState.Success) findNavController().navigate(R.id.action_registrationFragment_to_loginFragment)
         }
     }
 
@@ -97,10 +91,11 @@ class RegistrationFragment : Fragment() {
         userViewModel.signUp(
             email,
             password,
-            repeatedPassword,
-            requireContext().getString(R.string.check_passwords),
-            requireContext().getString(R.string.user_created),
-            requireContext().getString(R.string.authError)
+            repeatedPassword
+//            ,
+//            requireContext().getString(R.string.check_passwords),
+//            requireContext().getString(R.string.user_created),
+//            requireContext().getString(R.string.authError)
         )
     }
 }
