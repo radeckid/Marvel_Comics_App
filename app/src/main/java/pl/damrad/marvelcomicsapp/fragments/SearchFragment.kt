@@ -1,5 +1,6 @@
 package pl.damrad.marvelcomicsapp.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,8 @@ import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.adapters.ComicsAdapter
@@ -15,6 +18,7 @@ import pl.damrad.marvelcomicsapp.adapters.PaginationScrollListener
 import pl.damrad.marvelcomicsapp.databinding.FragmentSearchBinding
 import pl.damrad.marvelcomicsapp.other.ComicItemCreator
 import pl.damrad.marvelcomicsapp.other.Key
+import pl.damrad.marvelcomicsapp.other.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.MainViewModel
 
 class SearchFragment : Fragment() {
@@ -22,6 +26,7 @@ class SearchFragment : Fragment() {
     var binding: FragmentSearchBinding? = null
     private lateinit var adapter: ComicsAdapter
     private val mainViewModel: MainViewModel by viewModel()
+    private lateinit var connectionBar: Snackbar
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val bind = FragmentSearchBinding.inflate(inflater, container, false).apply {
@@ -39,8 +44,30 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connectionBar = createSnackbar(view)
+
         initRecyclerView()
         setSearchView()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        mainViewModel.connectionState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is UIState.Connected -> {
+                    if (connectionBar.isShown) connectionBar.dismiss()
+                }
+                is UIState.Disconnected -> {
+                    if (!connectionBar.isShown) connectionBar.show()
+                }
+                is UIState.Warning -> {
+                    Toasty.warning(requireContext(), getString(R.string.something_went_wrong), Toasty.LENGTH_LONG).show()
+                }
+                is UIState.Timeout -> {
+                    Toasty.warning(requireContext(), getString(R.string.connection_time_out), Toasty.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
     private fun setSearchView() {
@@ -98,5 +125,13 @@ class SearchFragment : Fragment() {
                 mainViewModel.infoSearchTextState.value = false
             }
         }
+    }
+
+    private fun createSnackbar(view: View): Snackbar {
+        return Snackbar
+            .make(view, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.RED)
+            .setTextColor(Color.WHITE)
     }
 }
