@@ -49,7 +49,11 @@ class RegistrationFragment : Fragment() {
         }
 
         userViewModel.isEmailValid.observe(viewLifecycleOwner) { result ->
-            if (!result) binding?.emailET?.error = getString(R.string.emailError)
+            if (!result) {
+                binding?.emailTextField?.error = getString(R.string.emailError)
+            } else {
+                binding?.emailTextField?.error = null
+            }
         }
 
         binding?.emailET?.doOnTextChanged { text, _, _, _ ->
@@ -57,7 +61,11 @@ class RegistrationFragment : Fragment() {
         }
 
         userViewModel.isPasswordValid.observe(viewLifecycleOwner) { result ->
-            if (!result) binding?.passwordET?.error = getString(R.string.passwordError)
+            if (!result) {
+                binding?.passwordTextField?.error = getString(R.string.passwordError)
+            } else {
+                binding?.passwordTextField?.error = null
+            }
         }
 
         binding?.passwordET?.doOnTextChanged { text, _, _, _ ->
@@ -65,11 +73,15 @@ class RegistrationFragment : Fragment() {
         }
 
         userViewModel.isRepeatedPasswordValid.observe(viewLifecycleOwner) { result ->
-            if (!result) binding?.repeatPasswordET?.error = getString(R.string.passwordError)
+            if (!result) {
+                binding?.repeatPasswordTextField?.error = getString(R.string.passwordError)
+            } else {
+                binding?.repeatPasswordTextField?.error = null
+            }
         }
 
         binding?.repeatPasswordET?.doOnTextChanged { text, _, _, _ ->
-            userViewModel.checkPasswordValid(text)
+            userViewModel.checkRepeatedPasswordValid(text)
         }
 
         userViewModel.userCreateStatus.observe(viewLifecycleOwner) { result ->
