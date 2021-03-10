@@ -67,8 +67,21 @@ class UserViewModel(
         val checkPass = userRepository.isValidPassword(password)
         val checkPass2 = userRepository.isValidPassword(password2)
 
+        isEmailValid.value = true
+        isPasswordValid.value = true
+        isRepeatedPasswordValid.value = true
+
         when {
-            !checkEmail || !checkPass || !checkPass2 -> {
+            !checkEmail -> {
+                isEmailValid.value = false
+                return@launch
+            }
+            !checkPass -> {
+                isPasswordValid.value = false
+                return@launch
+            }
+            !checkPass2 -> {
+                isRepeatedPasswordValid.value = false
                 return@launch
             }
             !comparePasswords(password, password2) -> {
@@ -85,7 +98,8 @@ class UserViewModel(
                     }
                 }
                 else -> {
-                    userCreateState.value = UIState.Warning//task.exception?.message ?: authErrorText
+                    userCreateState.value = task.exception?.message?.let { message -> UIState.ErrorResponse(message) }
+                        ?: run { UIState.Error }
                 }
             }
         }
@@ -98,18 +112,6 @@ class UserViewModel(
         } else {
             restorePassState.value = UIState.Error
         }
-    }
-
-    fun checkEmailValid(target: CharSequence?) {
-        isEmailValid.value = userRepository.isValidEmail(target)
-    }
-
-    fun checkPasswordValid(target: CharSequence?) {
-        isPasswordValid.value = userRepository.isValidPassword(target)
-    }
-
-    fun checkRepeatedPasswordValid(target: CharSequence?) {
-        isRepeatedPasswordValid.value = userRepository.isValidPassword(target)
     }
 
     private fun comparePasswords(target: CharSequence?, target2: CharSequence?): Boolean {
