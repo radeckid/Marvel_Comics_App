@@ -1,13 +1,15 @@
 package pl.damrad.marvelcomicsapp.fragments
 
+import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.adapters.ComicsAdapter
@@ -15,6 +17,8 @@ import pl.damrad.marvelcomicsapp.adapters.PaginationScrollListener
 import pl.damrad.marvelcomicsapp.databinding.FragmentComicsBinding
 import pl.damrad.marvelcomicsapp.other.ComicItemCreator
 import pl.damrad.marvelcomicsapp.other.Key
+import pl.damrad.marvelcomicsapp.states.NetworkState
+import pl.damrad.marvelcomicsapp.states.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.MainViewModel
 
 class ComicsFragment : Fragment() {
@@ -23,7 +27,9 @@ class ComicsFragment : Fragment() {
 
     private val mainViewModel: MainViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private lateinit var connectionBar: Snackbar
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val bind = FragmentComicsBinding.inflate(inflater, container, false).apply {
             mainVM = mainViewModel
             fragment = this@ComicsFragment
@@ -40,9 +46,43 @@ class ComicsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        connectionBar = createSnackbar(view)
+
+        mainViewModel.progressBarState.value = true
 
         setToolbar()
         initRecyclerView()
+        setObservers()
+    }
+
+    private fun setObservers() {
+        mainViewModel.connectionState.observe(viewLifecycleOwner) { state ->
+            when (state) {
+                is NetworkState.Connected -> {
+                    if (connectionBar.isShown) connectionBar.dismiss()
+                }
+                is NetworkState.Disconnected -> {
+                    if (!connectionBar.isShown) connectionBar.show()
+                }
+                is NetworkState.Warning -> {
+                    Toasty.warning(requireContext(), getString(R.string.something_went_wrong), Toasty.LENGTH_LONG).show()
+                }
+                is NetworkState.Timeout -> {
+                    Toasty.warning(requireContext(), getString(R.string.connection_time_out), Toasty.LENGTH_LONG).show()
+                }
+            }
+        }
+    }
+
+    private fun createSnackbar(view: View): Snackbar {
+        return Snackbar
+            .make(view, R.string.check_internet_connection, Snackbar.LENGTH_INDEFINITE)
+            .setAction(R.string.refresh) {
+                mainViewModel.getAllComics()
+            }
+            .setActionTextColor(Color.WHITE)
+            .setBackgroundTint(Color.RED)
+            .setTextColor(Color.WHITE)
     }
 
     fun onClickBug() {
@@ -87,6 +127,7 @@ class ComicsFragment : Fragment() {
 
         mainViewModel.listOfComics.observe(viewLifecycleOwner) {
             isLoading = false
+            mainViewModel.progressBarState.value = false
             adapter.setLoadingBar(false)
             val list = ComicItemCreator.createComicItem(it)
             adapter.addNewComicsToList(list)

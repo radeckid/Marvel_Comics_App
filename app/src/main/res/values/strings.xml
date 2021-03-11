@@ -34,4 +34,7 @@
     <string name="check_your_email">Check your email address</string>
     <string name="enter_the_address_in_the_field">Enter the address in the email field</string>
     <string name="detail_image">Detail Image</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="connection_time_out">Connection time out</string>
+    <string name="refresh">Refresh</string>
 </resources>

@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import pl.damrad.marvelcomicsapp.other.UIState
+import pl.damrad.marvelcomicsapp.states.UIState
 import pl.damrad.marvelcomicsapp.repository.UserRepository
 
 class UserViewModel(

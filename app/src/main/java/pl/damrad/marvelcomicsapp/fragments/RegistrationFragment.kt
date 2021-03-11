@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import es.dmoral.toasty.Toasty
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.databinding.FragmentRegistrationBinding
-import pl.damrad.marvelcomicsapp.other.UIState
+import pl.damrad.marvelcomicsapp.states.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.UserViewModel
 
 class RegistrationFragment : Fragment() {
