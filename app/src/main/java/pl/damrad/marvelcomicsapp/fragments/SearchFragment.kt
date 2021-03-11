@@ -18,7 +18,8 @@ import pl.damrad.marvelcomicsapp.adapters.PaginationScrollListener
 import pl.damrad.marvelcomicsapp.databinding.FragmentSearchBinding
 import pl.damrad.marvelcomicsapp.other.ComicItemCreator
 import pl.damrad.marvelcomicsapp.other.Key
-import pl.damrad.marvelcomicsapp.other.UIState
+import pl.damrad.marvelcomicsapp.states.NetworkState
+import pl.damrad.marvelcomicsapp.states.UIState
 import pl.damrad.marvelcomicsapp.viewmodels.MainViewModel
 
 class SearchFragment : Fragment() {
@@ -54,16 +55,16 @@ class SearchFragment : Fragment() {
     private fun setObservers() {
         mainViewModel.connectionState.observe(viewLifecycleOwner) { state ->
             when (state) {
-                is UIState.Connected -> {
+                is NetworkState.Connected -> {
                     if (connectionBar.isShown) connectionBar.dismiss()
                 }
-                is UIState.Disconnected -> {
+                is NetworkState.Disconnected -> {
                     if (!connectionBar.isShown) connectionBar.show()
                 }
-                is UIState.Warning -> {
+                is NetworkState.Warning -> {
                     Toasty.warning(requireContext(), getString(R.string.something_went_wrong), Toasty.LENGTH_LONG).show()
                 }
-                is UIState.Timeout -> {
+                is NetworkState.Timeout -> {
                     Toasty.warning(requireContext(), getString(R.string.connection_time_out), Toasty.LENGTH_LONG).show()
                 }
             }

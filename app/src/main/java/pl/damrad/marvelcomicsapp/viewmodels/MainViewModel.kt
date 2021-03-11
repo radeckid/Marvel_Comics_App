@@ -1,6 +1,5 @@
 package pl.damrad.marvelcomicsapp.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,12 +8,13 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import okio.Timeout
-import pl.damrad.marvelcomicsapp.other.UIState
+import pl.damrad.marvelcomicsapp.states.UIState
 import pl.damrad.marvelcomicsapp.repository.ComicsRepository
 import pl.damrad.marvelcomicsapp.retrofit.NoConnectivityException
 import pl.damrad.marvelcomicsapp.retrofit.response.MarvelResponse
+import pl.damrad.marvelcomicsapp.states.NetworkState
 import retrofit2.HttpException
-import java.io.IOException
+import java.net.SocketTimeoutException
 
 class MainViewModel(
     private val repository: ComicsRepository
@@ -30,7 +30,7 @@ class MainViewModel(
 
     val progressBarState = MutableLiveData(false)
 
-    val connectionState: MutableLiveData<UIState?> = MutableLiveData()
+    val connectionState: MutableLiveData<NetworkState?> = MutableLiveData()
 
     private val handler = CoroutineExceptionHandler { _, throwable ->
         handleException(throwable)
@@ -42,7 +42,7 @@ class MainViewModel(
 
     private fun getComicsByTitleFromMarvelServer(offset: Int, title: String) = viewModelScope.launch(handler) {
         _listOfComicsByTitle.value = repository.getComicsByTitle(offset, title)
-        connectionState.value = UIState.Connected
+        connectionState.value = NetworkState.Connected
     }
 
     private var offset: Int = 0
@@ -75,13 +75,13 @@ class MainViewModel(
     private fun handleException(throwable: Throwable) {
         when (throwable) {
             is NoConnectivityException -> {
-                connectionState.value = UIState.Disconnected
+                connectionState.value = NetworkState.Disconnected
             }
             is HttpException -> {
-                connectionState.value = UIState.Warning
+                connectionState.value = NetworkState.Warning
             }
-            is Timeout -> {
-                connectionState.value = UIState.Timeout
+            is SocketTimeoutException -> {
+                connectionState.value = NetworkState.Timeout
             }
         }
     }
