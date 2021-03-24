@@ -16,7 +16,7 @@ class FavoriteViewModel(
 
     val favoriteComicState = MutableLiveData<Boolean>()
 
-    fun getAllComics() = favoriteRepository.allComics.map { comics ->
+    fun getAllComics(email: String) = favoriteRepository.allComics(email).map { comics ->
         val list = arrayListOf<ComicsItem?>()
         for (item in comics) {
             list.add(
@@ -32,13 +32,13 @@ class FavoriteViewModel(
         list
     }.asLiveData()
 
-    fun insertComics(comics: Comics) = viewModelScope.launch {
-        favoriteRepository.insertComics(comics)
+    fun insertComics(comics: Comics, email: String) = viewModelScope.launch {
+        favoriteRepository.insertComics(comics, email)
     }
 
-    fun deleteComics(morePath: String) = viewModelScope.launch {
-        favoriteRepository.deleteComics(morePath)
+    fun deleteComics(morePath: String, email: String) = viewModelScope.launch {
+        favoriteRepository.deleteComics(morePath, email)
     }
 
-    fun getComicByDetailPath(morePath: String) = favoriteRepository.getComicByDetailPath(morePath)
+    fun getComicByDetailPath(morePath: String, email: String) = favoriteRepository.getComicByDetailPath(morePath, email)
 }

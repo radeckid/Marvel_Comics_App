@@ -10,7 +10,7 @@ import pl.damrad.marvelcomicsapp.room.model.Comics
 interface ComicsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertComics(comics: Comics)
+    fun insertComics(comics: Comics)
 
     @Query("DELETE FROM favorite_comics WHERE morePath=:morePath AND loggedUser=:user")
     suspend fun deleteComics(morePath: String, user: String)

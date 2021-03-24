@@ -42,6 +42,15 @@ android {
     buildFeatures {
         dataBinding true
     }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+        unitTests.includeAndroidResources = true
+        animationsDisabled = true
+    }
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
 }
 
 dependencies {
@@ -60,9 +69,29 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test:core:1.3.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    testImplementation 'org.mockito:mockito-core:2.24.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test:rules:1.3.0'
+    androidTestImplementation "androidx.arch.core:core-testing:2.1.0"
+
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test.ext:junit-ktx:1.1.2"
+
+    testImplementation "androidx.test:core-ktx:1.3.0"
+
+    testImplementation "org.robolectric:robolectric:4.4"
+
+    //Mockito
+    testImplementation 'org.mockito:mockito-core:2.24.5'
+    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+
+    //FragmentTest
+    androidTestImplementation 'androidx.fragment:fragment-testing:1.3.1'
+    implementation("androidx.fragment:fragment-ktx:1.3.1")
 
     // Koin for Android
     implementation "org.koin:koin-android:$koin_version"
@@ -81,6 +110,7 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
     implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
+    androidTestImplementation "androidx.navigation:navigation-testing:$navigation_version"
 
     //Coil
     implementation "io.coil-kt:coil:$coil_version"

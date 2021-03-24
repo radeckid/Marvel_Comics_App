@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.adapters.ComicsAdapter
@@ -51,8 +52,10 @@ class FavoriteFragment : Fragment() {
 
         binding?.recyclerView?.adapter = adapter
 
-        favoriteViewModel.getAllComics().observe(viewLifecycleOwner) { list ->
-            adapter.setList(list)
+        FirebaseAuth.getInstance().currentUser?.email?.let { email ->
+            favoriteViewModel.getAllComics(email).observe(viewLifecycleOwner) { list ->
+                adapter.setList(list)
+            }
         }
     }
 }

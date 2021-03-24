@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import coil.load
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import pl.damrad.marvelcomicsapp.R
 import pl.damrad.marvelcomicsapp.adapters.items.ComicsItem
@@ -22,12 +23,14 @@ import pl.damrad.marvelcomicsapp.databinding.FragmentDetailsBinding
 import pl.damrad.marvelcomicsapp.other.Key
 import pl.damrad.marvelcomicsapp.room.model.Comics
 import pl.damrad.marvelcomicsapp.viewmodels.FavoriteViewModel
+import kotlin.math.log
 
 class DetailsFragment : Fragment() {
     private var binding: FragmentDetailsBinding? = null
     private var comicsItem: ComicsItem? = null
 
     private val favoriteViewModel: FavoriteViewModel by viewModel()
+    private var loggedEmail: String? = FirebaseAuth.getInstance().currentUser?.email
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,13 +69,15 @@ class DetailsFragment : Fragment() {
 
         comicsItem?.morePath?.let { path ->
             val item = binding?.toolbar?.menu?.findItem(R.id.favoriteBtn)
-            favoriteViewModel.getComicByDetailPath(path)?.observe(viewLifecycleOwner) { comic ->
-                comic?.let {
-                    item?.icon = getDrawable(requireContext(), R.drawable.ic_baseline_favorite_24)
-                    favoriteViewModel.favoriteComicState.value = true
-                } ?: run {
-                    item?.icon = getDrawable(requireContext(), R.drawable.ic_baseline_favorite_border_24)
-                    favoriteViewModel.favoriteComicState.value = false
+            loggedEmail?.let { email ->
+                favoriteViewModel.getComicByDetailPath(path, email).observe(viewLifecycleOwner) { comic ->
+                    comic?.let {
+                        item?.icon = getDrawable(requireContext(), R.drawable.ic_baseline_favorite_24)
+                        favoriteViewModel.favoriteComicState.value = true
+                    } ?: run {
+                        item?.icon = getDrawable(requireContext(), R.drawable.ic_baseline_favorite_border_24)
+                        favoriteViewModel.favoriteComicState.value = false
+                    }
                 }
             }
         }
@@ -90,10 +95,10 @@ class DetailsFragment : Fragment() {
                 R.id.favoriteBtn -> {
                     when (favoriteViewModel.favoriteComicState.value) {
                         true -> {
-                            comicsItem?.morePath?.let { favoriteViewModel.deleteComics(it) }
+                            comicsItem?.morePath?.let { loggedEmail?.let { email -> favoriteViewModel.deleteComics(it, email) } }
                         }
                         false -> {
-                            favoriteViewModel.insertComics(comic)
+                            loggedEmail?.let { favoriteViewModel.insertComics(comic, it) }
                         }
                     }
                     true
