@@ -17,9 +17,8 @@ import pl.damrad.marvelcomicsapp.viewmodels.FavoriteViewModel
 import java.io.IOException
 
 @RunWith(JUnit4::class)
-class FavoriteViewModelTest {
+class FavoriteComicsDatabaseTest {
 
-    private lateinit var viewModel: FavoriteViewModel
     private lateinit var db: ComicsRoomDatabase
 
     @Rule
@@ -33,7 +32,6 @@ class FavoriteViewModelTest {
         ).build()
         val comicsDao = db.comicsDao()
         val repository = FavoriteRepository(comicsDao)
-        viewModel = FavoriteViewModel(repository)
 
     }
 
