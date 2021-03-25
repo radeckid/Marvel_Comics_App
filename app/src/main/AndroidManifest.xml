@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/shield"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MarvelComicsApp">
+        android:theme="@style/SplashScreenTheme">
         <activity
             android:name="pl.damrad.marvelcomicsapp.activity.MainActivity"
             android:screenOrientation="sensorPortrait">

@@ -14,6 +14,7 @@
         <item name="android:windowLightStatusBar">false</item>
         <!-- Customize your theme here. -->
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
+        <item name="searchViewBg">@color/searchViewBg</item>
     </style>
 
     <!--    Toolbar-->
