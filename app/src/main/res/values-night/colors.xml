@@ -12,7 +12,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="searchViewBg">#f7f7f7</color>
+    <color name="searchViewBg">#33F7F7F7</color>
     <color name="searchViewText">#C1C3D1</color>
 
     <color name="iconGrey">#e1e1e1</color>
