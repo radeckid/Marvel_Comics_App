@@ -2,6 +2,7 @@ package pl.damrad.marvelcomicsapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
+import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.Before
 import org.junit.Rule
@@ -38,7 +39,10 @@ class MainViewModelTest {
 
     @Test
     fun getComicsFromServer_Offset25() {
-        viewModel.getAllComics()
+        runBlocking {
+            repository.getComicsList(25)
+            viewModel.getAllComics()
+        }
         val result = viewModel.listOfComics.blockingObserve()
         assertThat(result, equalTo(null))
     }
